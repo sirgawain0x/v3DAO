@@ -1,7 +1,7 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import { AppSwitcher } from './AppSwitcher';
-import { ReactComponent as Daohaus } from '../../../assets/Daohaus.svg';
+import { ReactComponent as Creative } from '../../../assets/Creative_logo.svg';
 import { ReactComponent as Summoner } from '../../../assets/Summoner.svg';
 import { ReactComponent as Docs } from '../../../assets/Docs.svg';
 import { ReactComponent as Hub } from '../../../assets/Hub.svg';
@@ -22,24 +22,24 @@ export const DaoHausAppSwitcher = Template.bind({});
 DaoHausAppSwitcher.args = {
   currentApp: {
     name: 'Hub',
-    url: 'https://hub.daohaus.fun/',
+    url: 'https://dao.creativeplatform.xyz/',
     Icon: Hub,
   },
   apps: [
     {
       name: 'Summoner',
-      url: 'https://summon.daohaus.fun/',
+      url: 'https://summon.creativeplatform.xyz/',
       Icon: Summoner,
     },
     {
       name: 'Docs',
-      url: 'https://storybook.daohaus.fun/',
+      url: 'https://creativeplatform.xyz/docs/intro',
       Icon: Docs,
     },
     {
-      name: 'DAOHaus',
-      url: 'https://daohaus.club/',
-      Icon: Daohaus,
+      name: 'Creative Organization DAO',
+      url: 'https://creativeplatform.xyz/',
+      Icon: Creative,
     },
   ],
 };
