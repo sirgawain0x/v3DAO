@@ -36,7 +36,10 @@ export const Footer = () => {
       <div className="logo-box">
         <img src={creativeIcon} alt="Creative Play logo" />
         <ParMd>
-          Built by <Link href="https://creativeplatform.xyz">Creative Organization DAO</Link>
+          Built by{' '}
+          <Link href="https://creativeplatform.xyz">
+            Creative Organization DAO
+          </Link>
         </ParMd>
       </div>
     </StyledFooter>
