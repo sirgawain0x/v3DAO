@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { ParMd, Link } from '../../atoms';
-import hausCastle from '../../../assets/hausCastle.svg';
+import creativeIcon from '../../../assets/Creative_logo.svg';
 import { widthQuery } from '../../../theme/global/breakpoints';
 
 const StyledFooter = styled.footer`
@@ -14,6 +14,8 @@ const StyledFooter = styled.footer`
     display: flex;
     align-items: center;
     img {
+      width: auto;
+      height: 64px;
       margin-right: 1.8rem;
     }
   }
@@ -32,9 +34,12 @@ export const Footer = () => {
   return (
     <StyledFooter>
       <div className="logo-box">
-        <img src={hausCastle} alt="daohaus castle logo" />
+        <img src={creativeIcon} alt="Creative Play logo" />
         <ParMd>
-          Built by <Link href="https://daohaus.club">DAOhaus</Link>
+          Built by{' '}
+          <Link href="https://creativeplatform.xyz">
+            Creative Organization DAO
+          </Link>
         </ParMd>
       </div>
     </StyledFooter>

@@ -5,8 +5,8 @@ import { Container } from '@material-ui/core';
 const AppFooter = () => {
   return (
     <StyledFooter>
-      <Link href="https://daohaus.club/" target="_blank">
-        <StyledImage alt="built by daohaus" src="/assets/daohaus.png" />
+      <Link href="https://creativeplatform.xyz/" target="_blank">
+        <StyledImage alt="built by Creative" src="/assets/creative.png" />
       </Link>
     </StyledFooter>
   );
