@@ -13,7 +13,7 @@
         "tsConfig": "libs/moloch-v3-macro-ui/tsconfig.lib.json",
         "project": "libs/moloch-v3-macro-ui/package.json",
         "entryFile": "libs/moloch-v3-macro-ui/src/index.ts",
-        "external": ["react/jsx-runtime"],
+        "external": ["react", "react-dom", "react/jsx-runtime"],
         "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
         "compiler": "babel",
         "buildableProjectDepsInPackageJsonType": "dependencies",
@@ -29,7 +29,7 @@
     "publish": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/scripts/publish.mjs tx-builder {args.ver} {args.tag}"
+        "command": "node tools/scripts/publish.mjs moloch-v3-macro-ui {args.ver} {args.tag}"
       },
       "dependsOn": ["build"]
     },

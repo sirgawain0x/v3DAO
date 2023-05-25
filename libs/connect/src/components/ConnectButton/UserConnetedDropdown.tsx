@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { BiChevronDown, BiChevronUp } from 'react-icons/bi/index.js';
 import styled, { useTheme } from 'styled-components';
 
 import { truncateAddress } from '@daohaus/utils';
@@ -38,7 +37,6 @@ export const UserConnectedDropdown = ({ isSm }: { isSm: boolean }) => {
       <DropdownProfileTrigger
         color="primary"
         profile={profile}
-        size={isSm ? 'sm' : 'md'}
         avatarOnly={isSm}
       >
         {!isSm && (

@@ -3,7 +3,6 @@ import {
   NestedArray,
   POSTER_TAGS,
   TABULA_TAGS,
-  ENCODED_0X0_DATA,
   TXLego,
   ValidArgType,
   TXLegoBase,
@@ -96,6 +95,32 @@ export const TX: Record<string, TXLego> = {
         args: [
           nestInArray('.formValues.recipient'),
           nestInArray('.formValues.lootRequested'),
+        ],
+      },
+    ],
+  }),
+  ISSUE_SHARES: buildMultiCallTX({
+    id: 'ISSUE',
+    JSONDetails: {
+      type: 'JSONDetails',
+      jsonSchema: {
+        title: '.formValues.title',
+        description: '.formValues.description',
+        contentURI: `.formValues.link`,
+        contentURIType: { type: 'static', value: 'url' },
+        proposalType: {
+          type: 'static',
+          value: ProposalTypeIds.IssueSharesLoot,
+        },
+      },
+    },
+    actions: [
+      {
+        contract: CONTRACT.CURRENT_DAO,
+        method: 'mintShares',
+        args: [
+          '.formValues.addressesAndAmounts.recipients',
+          '.formValues.addressesAndAmounts.values',
         ],
       },
     ],
@@ -228,7 +253,7 @@ export const TX: Record<string, TXLego> = {
         value: '.formValues.paymentAmount',
         data: {
           type: 'static',
-          value: ENCODED_0X0_DATA,
+          value: '0x',
         },
       },
     ],
@@ -281,8 +306,7 @@ export const TX: Record<string, TXLego> = {
                       value: '.formValues.paymentAmount',
                       data: {
                         type: 'static',
-                        value: ENCODED_0X0_DATA,
-                        // value: '0x',
+                        value: '0x',
                       },
                     },
                   ],

@@ -26,6 +26,10 @@ const OverviewContainer = styled.div`
   border: 1px ${({ theme }: { theme: Theme }) => theme.secondary.step5} solid;
   background-color: ${({ theme }: { theme: Theme }) => theme.secondary.step3};
 
+  .description {
+    word-break: break-word;
+  }
+
   .proposal-link {
     margin-top: 1.2rem;
   }
@@ -56,7 +60,7 @@ export const ProposalDetailsGuts = ({
   const { networks } = useDHConnect();
   return (
     <OverviewContainer>
-      <ParMd>{proposal.description}</ParMd>
+      <ParMd className="description">{proposal.description}</ParMd>
       {proposal.contentURI && (
         <Link href={proposal.contentURI} className="proposal-link">
           Link
@@ -81,6 +85,19 @@ export const ProposalDetailsGuts = ({
           size="sm"
         />
       </DataContainer>
+
+      {proposal.proposedBy && proposal.proposedBy !== proposal.createdBy && (
+        <DataContainer style={{ marginTop: '0' }}>
+          <div>
+            <ParMd>Through Contract</ParMd>
+            <MemberProfileAvatar
+              daoid={daoid}
+              daochain={daochain as keyof Keychain}
+              memberAddress={proposal.proposedBy}
+            />
+          </div>
+        </DataContainer>
+      )}
 
       {Number(proposal.proposalOffering) > 0 && (
         <DataIndicator

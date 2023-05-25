@@ -3,9 +3,8 @@ import { createRoot } from 'react-dom/client';
 import { HashRouter } from 'react-router-dom';
 import { Buffer } from 'buffer';
 
-import { font, HausThemeProvider, ThemeOverrides } from '@daohaus/ui';
+import { HausThemeProvider } from '@daohaus/ui';
 
-import { DHConnectProvider } from '@daohaus/connect';
 import { App } from './App';
 
 // This solves an issue when using WalletConnect and intercept Txs to create dao proposals
@@ -23,9 +22,7 @@ root.render(
   <StrictMode>
     <HashRouter>
       <HausThemeProvider>
-        <DHConnectProvider>
-          <App />
-        </DHConnectProvider>
+        <App />
       </HausThemeProvider>
     </HashRouter>
   </StrictMode>

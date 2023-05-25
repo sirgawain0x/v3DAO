@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useInfiniteQuery } from 'react-query';
 
 import {
@@ -43,6 +43,7 @@ const fetchMembers = async ({
       paging: pageParam || paging,
       graphApiKeys,
     });
+
     return res;
   } catch (error) {
     throw new Error(
@@ -74,7 +75,7 @@ export const useDaoMembers = (props?: DaoMembersProps) => {
       orderDirection: 'desc',
     },
     paging = {
-      pageSize: 5,
+      pageSize: 500,
       offset: 0,
     },
   } = props || {};
@@ -107,7 +108,7 @@ export const useDaoMembers = (props?: DaoMembersProps) => {
   );
 
   const { data, error, ...rest } = useInfiniteQuery(
-    [{ daoId, daoChain, filter, ordering, paging }],
+    [queryId, { daoId, daoChain, filter, ordering, paging }],
     ({ pageParam }) =>
       fetchMembers({
         daoId,
@@ -124,13 +125,17 @@ export const useDaoMembers = (props?: DaoMembersProps) => {
     }
   );
 
-  const allMembers =
-    data?.pages?.reduce((acc, page) => {
-      if (page?.items) {
-        return [...acc, ...page.items];
-      }
-      return [];
-    }, [] as MolochV3Member[]) || [];
+  const allMembers = useMemo(() => {
+    return (
+      data?.pages?.reduce((acc, page) => {
+        if (page?.items) {
+          const truthyItems = page.items.filter((item) => !!item);
+          return [...acc, ...truthyItems];
+        }
+        return acc;
+      }, [] as NonNullable<MolochV3Member>[]) || []
+    );
+  }, [data]);
 
   const filterMembers = (filter: Member_Filter) => {
     if (typeof updateFilter === 'function') {

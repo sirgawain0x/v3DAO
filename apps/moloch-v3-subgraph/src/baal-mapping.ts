@@ -1,4 +1,4 @@
-import { Bytes, log } from '@graphprotocol/graph-ts';
+import { Address, Bytes, log } from '@graphprotocol/graph-ts';
 import {
   Dao,
   Proposal,
@@ -49,21 +49,19 @@ export function handleSetupComplete(event: SetupComplete): void {
   dao.minRetentionPercent = event.params.minRetentionPercent;
   dao.shareTokenName = event.params.name;
   dao.shareTokenSymbol = event.params.symbol;
-  dao.lootTokenName = event.params.name.concat(' LOOT');
-  dao.lootTokenSymbol = event.params.symbol.concat('-LOOT');
   dao.totalShares = event.params.totalShares;
   dao.totalLoot = event.params.totalLoot;
 
   const daoProfile = Record.load(daoId.concat('-record-summon'));
   if (daoProfile) {
-    let result = getResultFromJson(daoProfile.content);
+    const result = getResultFromJson(daoProfile.content);
     if (result.error != 'none') {
       log.error('no content', []);
       return;
     }
-    let object = result.object;
+    const object = result.object;
 
-    let name = getStringFromJson(object, 'name');
+    const name = getStringFromJson(object, 'name');
 
     dao.name = name.data;
   }
@@ -75,7 +73,7 @@ export function handleSetupComplete(event: SetupComplete): void {
 
 // GovernanceConfigSet (uint32 voting, uint32 grace, uint256 newOffering, uint256 quorum, uint256 sponsor, uint256 minRetention)
 export function handleGovernanceConfigSet(event: GovernanceConfigSet): void {
-  let dao = Dao.load(event.address.toHexString());
+  const dao = Dao.load(event.address.toHexString());
   if (dao === null) {
     return;
   }
@@ -95,12 +93,12 @@ export function handleGovernanceConfigSet(event: GovernanceConfigSet): void {
 
 // ShamanSet (index_topic_1 address shaman, uint256 permission)
 export function handleShamanSet(event: ShamanSet): void {
-  let dao = Dao.load(event.address.toHexString());
+  const dao = Dao.load(event.address.toHexString());
   if (dao === null) {
     return;
   }
 
-  let shamanId = event.address
+  const shamanId = event.address
     .toHexString()
     .concat('-shaman-')
     .concat(event.params.shaman.toHexString());
@@ -121,7 +119,7 @@ export function handleShamanSet(event: ShamanSet): void {
 }
 
 export function handleSharesPaused(event: SharesPaused): void {
-  let dao = Dao.load(event.address.toHexString());
+  const dao = Dao.load(event.address.toHexString());
   if (dao === null) {
     return;
   }
@@ -134,7 +132,7 @@ export function handleSharesPaused(event: SharesPaused): void {
 }
 
 export function handleLootPaused(event: LootPaused): void {
-  let dao = Dao.load(event.address.toHexString());
+  const dao = Dao.load(event.address.toHexString());
   if (dao === null) {
     return;
   }
@@ -147,23 +145,29 @@ export function handleLootPaused(event: LootPaused): void {
 }
 
 export function handleSubmitProposal(event: SubmitProposal): void {
-  let dao = Dao.load(event.address.toHexString());
+  const dao = Dao.load(event.address.toHexString());
   if (dao === null) {
     return;
   }
 
-  let proposalId = event.address
+  const proposalId = event.address
     .toHexString()
     .concat('-proposal-')
     .concat(event.params.proposal.toString());
 
-  let proposerId = dao.id
+  const proposerId = dao.id
     .concat('-member-')
     .concat(event.transaction.from.toHexString());
 
-  let proposal = new Proposal(proposalId);
+  const proposal = new Proposal(proposalId);
   proposal.createdAt = event.block.timestamp;
   proposal.createdBy = event.transaction.from;
+  proposal.proposedBy =
+    event.transaction.to === null ||
+    event.address.toHexString() ==
+      (event.transaction.to as Address).toHexString()
+      ? event.transaction.from
+      : event.transaction.to;
   proposal.proposerMembership = proposerId;
   proposal.txHash = event.transaction.hash;
   proposal.dao = event.address.toHexString();
@@ -212,38 +216,42 @@ export function handleSubmitProposal(event: SubmitProposal): void {
         .plus(event.params.votingPeriod)
         .plus(dao.gracePeriod)
     : constants.BIGINT_ZERO;
+  proposal.yesVotes = constants.BIGINT_ZERO;
+  proposal.yesBalance = constants.BIGINT_ZERO;
+  proposal.noVotes = constants.BIGINT_ZERO;
+  proposal.noBalance = constants.BIGINT_ZERO;
 
   proposal.details = event.params.details;
-  let result = getResultFromJson(event.params.details);
+  const result = getResultFromJson(event.params.details);
   if (result.error != 'none') {
     log.error('details parse error prop: {}', [proposalId]);
     proposal.details = event.params.details;
   } else {
-    let object = result.object;
+    const object = result.object;
 
-    let title = getStringFromJson(object, 'title');
+    const title = getStringFromJson(object, 'title');
     if (title.error == 'none') {
       proposal.title = title.data;
     }
 
-    let description = getStringFromJson(object, 'description');
+    const description = getStringFromJson(object, 'description');
     if (description.error == 'none') {
       proposal.description = description.data;
     }
 
-    let proposalType = getStringFromJson(object, 'proposalType');
+    const proposalType = getStringFromJson(object, 'proposalType');
     if (proposalType.error == 'none') {
       proposal.proposalType = proposalType.data;
     } else {
       proposal.proposalType = 'unknown';
     }
 
-    let contentURI = getStringFromJson(object, 'contentURI');
+    const contentURI = getStringFromJson(object, 'contentURI');
     if (contentURI.error == 'none') {
       proposal.contentURI = contentURI.data;
     }
 
-    let contentURIType = getStringFromJson(object, 'contentURIType');
+    const contentURIType = getStringFromJson(object, 'contentURIType');
     if (contentURIType.error == 'none') {
       proposal.contentURIType = contentURIType.data;
     }
@@ -261,22 +269,22 @@ export function handleSubmitProposal(event: SubmitProposal): void {
 }
 
 export function handleSponsorProposal(event: SponsorProposal): void {
-  let dao = Dao.load(event.address.toHexString());
+  const dao = Dao.load(event.address.toHexString());
   if (dao === null) {
     return;
   }
 
-  let proposalId = event.address
+  const proposalId = event.address
     .toHexString()
     .concat('-proposal-')
     .concat(event.params.proposal.toString());
 
-  let proposal = Proposal.load(proposalId);
+  const proposal = Proposal.load(proposalId);
   if (proposal === null) {
     return;
   }
 
-  let sponsorId = dao.id
+  const sponsorId = dao.id
     .concat('-member-')
     .concat(event.params.member.toHexString());
 
@@ -301,12 +309,17 @@ export function handleSponsorProposal(event: SponsorProposal): void {
 }
 
 export function handleProcessProposal(event: ProcessProposal): void {
-  let proposalId = event.address
+  const dao = Dao.load(event.address.toHexString());
+  if (dao === null) {
+    return;
+  }
+
+  const proposalId = event.address
     .toHexString()
     .concat('-proposal-')
     .concat(event.params.proposal.toString());
 
-  let proposal = Proposal.load(proposalId);
+  const proposal = Proposal.load(proposalId);
   if (proposal === null) {
     return;
   }
@@ -317,6 +330,8 @@ export function handleProcessProposal(event: ProcessProposal): void {
   proposal.processed = true;
   proposal.passed = event.params.passed;
   proposal.actionFailed = event.params.actionFailed;
+  proposal.quorumPercentAtExecution = dao.quorumPercent;
+  proposal.totalSharesAtExecution = dao.totalShares;
 
   proposal.save();
 
@@ -324,12 +339,12 @@ export function handleProcessProposal(event: ProcessProposal): void {
 }
 
 export function handleCancelProposal(event: CancelProposal): void {
-  let proposalId = event.address
+  const proposalId = event.address
     .toHexString()
     .concat('-proposal-')
     .concat(event.params.proposal.toString());
 
-  let proposal = Proposal.load(proposalId);
+  const proposal = Proposal.load(proposalId);
   if (proposal === null) {
     return;
   }
@@ -345,29 +360,29 @@ export function handleCancelProposal(event: CancelProposal): void {
 }
 
 export function handleSubmitVote(event: SubmitVote): void {
-  let dao = Dao.load(event.address.toHexString());
+  const dao = Dao.load(event.address.toHexString());
   if (dao === null) {
     return;
   }
 
-  let proposalId = event.address
+  const proposalId = event.address
     .toHexString()
     .concat('-proposal-')
     .concat(event.params.proposal.toString());
 
-  let proposal = Proposal.load(proposalId);
+  const proposal = Proposal.load(proposalId);
   if (proposal === null) {
     return;
   }
 
-  let voteId = event.address
+  const voteId = event.address
     .toHexString()
     .concat('-proposal-')
     .concat(event.params.proposal.toHexString())
     .concat('-vote-')
     .concat(event.params.member.toHexString());
 
-  let vote = new Vote(voteId);
+  const vote = new Vote(voteId);
 
   vote.createdAt = event.block.timestamp;
   vote.daoAddress = event.address;
@@ -375,7 +390,7 @@ export function handleSubmitVote(event: SubmitVote): void {
   vote.balance = event.params.balance;
   vote.txHash = event.transaction.hash;
 
-  let memberId = event.address
+  const memberId = event.address
     .toHexString()
     .concat('-member-')
     .concat(event.params.member.toHexString());
@@ -392,7 +407,7 @@ export function handleSubmitVote(event: SubmitVote): void {
     proposal.noVotes = proposal.noVotes.plus(constants.BIGINT_ONE);
     proposal.noBalance = proposal.noBalance.plus(event.params.balance);
   }
-  let hasQuorum =
+  const hasQuorum =
     proposal.yesBalance.times(constants.BIGINT_ONE_HUNDRED) >
     dao.quorumPercent.times(dao.totalShares);
   proposal.currentlyPassing =
@@ -405,22 +420,22 @@ export function handleSubmitVote(event: SubmitVote): void {
 }
 
 export function handleRageQuit(event: Ragequit): void {
-  let dao = Dao.load(event.address.toHexString());
+  const dao = Dao.load(event.address.toHexString());
   if (dao === null) {
     return;
   }
 
-  let memberId = event.address
+  const memberId = event.address
     .toHexString()
     .concat('-member-')
     .concat(event.params.member.toHexString());
 
-  let rageId = memberId
+  const rageId = memberId
     .concat('-')
     .concat('rage-')
     .concat(event.transaction.hash.toHexString());
 
-  let rage = new RageQuit(rageId);
+  const rage = new RageQuit(rageId);
 
   rage.createdAt = event.block.timestamp;
   rage.txHash = event.transaction.hash;
@@ -439,7 +454,7 @@ export function handleRageQuit(event: Ragequit): void {
 }
 
 export function handleLockAdmin(event: LockAdmin): void {
-  let dao = Dao.load(event.address.toHexString());
+  const dao = Dao.load(event.address.toHexString());
   if (dao === null) {
     return;
   }
@@ -450,7 +465,7 @@ export function handleLockAdmin(event: LockAdmin): void {
 }
 
 export function handleLockGovernor(event: LockGovernor): void {
-  let dao = Dao.load(event.address.toHexString());
+  const dao = Dao.load(event.address.toHexString());
   if (dao === null) {
     return;
   }
@@ -461,7 +476,7 @@ export function handleLockGovernor(event: LockGovernor): void {
 }
 
 export function handleLockManager(event: LockManager): void {
-  let dao = Dao.load(event.address.toHexString());
+  const dao = Dao.load(event.address.toHexString());
   if (dao === null) {
     return;
   }
