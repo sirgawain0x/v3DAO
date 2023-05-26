@@ -7,7 +7,7 @@ import {
 import { H1, ParMd, Button } from '@daohaus/ui';
 import { NEXT_PUBLIC_STUDIO_API_KEY } from '../utils/hub';
 import { Box, Flex, Stack, Text, Image } from '@chakra-ui/react';
-import { VIDEOS, VIDEO_IMAGE } from '../utils/constants';
+import { VIDEOS, VIDEO_IMAGE, HUB_TEXT } from '../utils/constants';
 
 const client = createReactClient({
   provider: studioProvider({ apiKey: NEXT_PUBLIC_STUDIO_API_KEY }),
@@ -49,12 +49,12 @@ export const HomeNotConnected = () => {
           mr={50}
           mb={10}
         >
-          <H1 color="primary.800">{'CREATIVE ProjeX'}</H1>
+          <H1 color="primary.800">{HUB_TEXT.TITLE}</H1>
           <ParMd color="primary.800">
-            {'Empower Your Creative Vision: Unleash the DAOvolution!'}
+            {HUB_TEXT.DESCRIPTION}
           </ParMd>
-          <Button href="/" size="lg">
-            {'Summon'}
+          <Button href="https://spearmint.xyz/p/creative-tv" size="lg">
+            {HUB_TEXT.BUTTON}
           </Button>
           <Text
             fontSize="xs"
@@ -63,7 +63,7 @@ export const HomeNotConnected = () => {
             color="primary.800"
             opacity="0.6"
           >
-            No credit card required.
+            {HUB_TEXT.NOTE}
           </Text>
         </Stack>
         <Box
