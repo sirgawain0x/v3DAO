@@ -69,3 +69,11 @@ export const SENSITIVE_PROPOSAL_TYPES: { [key: string]: boolean } = {
 export const DAO_METHOD_TO_PROPOSAL_TYPE: { [key: string]: string } = {
   setShamans: ProposalTypeIds.AddShaman,
 };
+
+// HUB VIDEOS (NOT SIGNED IN)
+export const VIDEOS: { [key: string]: string } = {
+  FEATURED: '2313nmcfbchw60si',
+};
+
+// VIDEO IMAGE POSTER
+export const VIDEO_IMAGE = '/assets/CREATIVE2.svg';

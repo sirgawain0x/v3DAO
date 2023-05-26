@@ -68,7 +68,7 @@ export const fetchProfile = async (
   const cachedProfile = !forceUpdate && (await getCachedProfile({ address }));
   if (cachedProfile) return cachedProfile;
   // Workaround when poiting to a network where ENS is not deployed
-  const daochain = !['0x1', '0x5'].includes(chainId) ? '0x1' : chainId;
+  const daochain = !['0x1', '0x5', '0x89'].includes(chainId) ? '0x1' : chainId;
   const profile = await getProfileForAddress(
     address,
     HAUS_NETWORK_DATA[daochain]?.rpc

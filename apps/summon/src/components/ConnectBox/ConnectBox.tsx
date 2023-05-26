@@ -23,9 +23,9 @@ export const ConnectBox = () => {
   return (
     <ConnectBoxContainer>
       <div className="inner">
-        <ParSm>Connect wallet to summon a DAO</ParSm>
+        <ParSm>Sign In to summon a DAO</ParSm>
         <Button onClick={connectWallet} size="sm">
-          Connect
+          Sign In
         </Button>
       </div>
     </ConnectBoxContainer>
