@@ -14,8 +14,16 @@ const client = createReactClient({
 });
 
 const PosterImage = () => {
-  return <Image src={VIDEO_IMAGE} height={'100%'} objectFit="cover" alt="Creative Logo" placeholder="blur" />
-}
+  return (
+    <Image
+      src={VIDEO_IMAGE}
+      height={'100%'}
+      objectFit="cover"
+      alt="Creative Logo"
+      placeholder="blur"
+    />
+  );
+};
 
 export const HomeNotConnected = () => {
   return (

@@ -76,4 +76,4 @@ export const VIDEOS: { [key: string]: string } = {
 };
 
 // VIDEO IMAGE POSTER
-export const VIDEO_IMAGE = '/assets/CREATIVE2.svg'
+export const VIDEO_IMAGE = '/assets/CREATIVE2.svg';
