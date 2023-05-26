@@ -50,9 +50,7 @@ export const HomeNotConnected = () => {
           mb={10}
         >
           <H1 color="primary.800">{HUB_TEXT.TITLE}</H1>
-          <ParMd color="primary.800">
-            {HUB_TEXT.DESCRIPTION}
-          </ParMd>
+          <ParMd color="primary.800">{HUB_TEXT.DESCRIPTION}</ParMd>
           <Button href="https://spearmint.xyz/p/creative-tv" size="lg">
             {HUB_TEXT.BUTTON}
           </Button>

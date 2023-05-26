@@ -71,11 +71,11 @@ export const DAO_METHOD_TO_PROPOSAL_TYPE: { [key: string]: string } = {
 };
 
 // HUB TITLE
-export const HUB_TEXT: { [key:string]: string } = {
+export const HUB_TEXT: { [key: string]: string } = {
   TITLE: 'CREATIVE ProjeX',
   DESCRIPTION: 'Empower Your Creative Vision: Unleash the DAOvolution!',
   BUTTON: 'SUMMON',
-  NOTE: 'No credit card required.'
+  NOTE: 'No credit card required.',
 };
 
 // HUB VIDEOS (NOT SIGNED IN)
