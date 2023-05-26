@@ -30,7 +30,7 @@ const ConnectWalletButton = ({ isSm }: { isSm: boolean }) => {
         size={isSm ? 'sm' : 'md'}
         className="should-connect"
       >
-        {!isSm && 'Connect Wallet'}
+        {!isSm && 'Sign In'}
       </Button>
     </ButtonContainer>
   );
