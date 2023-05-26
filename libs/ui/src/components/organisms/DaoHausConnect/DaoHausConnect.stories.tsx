@@ -57,7 +57,7 @@ import { DropdownMenuLabel, DropdownMenuItem } from '../../molecules';
 //     }}
 //     {...props}
 //   >
-//     Connect Wallet
+//     Sign In
 //   </Button>
 // );
 

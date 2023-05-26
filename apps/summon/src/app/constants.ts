@@ -16,4 +16,20 @@ export const limitedNetworkTest = {
     rpc: `https://${process.env.NX_RIVET_KEY}.goerli.rpc.rivet.cloud/`,
     explorer: 'https://goerli.etherscan.io',
   },
+  '0x89':{
+    chainId: '0x89',
+    networkId: 137,
+    name: 'Polygon',
+    symbol: 'MATIC',
+    rpc:`https://polygon-mainnet.g.alchemy.com/v2/${process.env.NX_ALCHEMY_API_KEY_POLYGON}`,
+    explorer: 'https://polyscan.com',
+  },
+  '0xa4b1':{
+    chainId: '0xa4b1',
+    networkId: 42161,
+    name: 'Arbitrum',
+    symbol: 'ETH',
+    rpc: `https://arb-mainnet.g.alchemy.com/v2/${process.env.NX_ALCHEMY_API_KEY_ARBITRUM}`,
+    explorer: 'https://arbiscan.com',
+  },
 };

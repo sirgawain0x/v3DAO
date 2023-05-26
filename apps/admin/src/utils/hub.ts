@@ -51,3 +51,10 @@ export const getDelegateFilter = (
 };
 
 export const DEFAULT_SORT_KEY = 'PROPOSALS';
+
+declare const process: {
+  env: {
+    NEXT_PUBLIC_STUDIO_API_KEY: string,
+  }
+}
+export const NEXT_PUBLIC_STUDIO_API_KEY = process.env.NEXT_PUBLIC_STUDIO_API_KEY
