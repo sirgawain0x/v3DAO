@@ -70,6 +70,14 @@ export const DAO_METHOD_TO_PROPOSAL_TYPE: { [key: string]: string } = {
   setShamans: ProposalTypeIds.AddShaman,
 };
 
+// HUB TITLE
+export const HUB_TEXT: { [key: string]: string } = {
+  TITLE: 'CREATIVE ProjeX',
+  DESCRIPTION: 'Empower Your Creative Vision: Unleash the DAOvolution!',
+  BUTTON: 'SUMMON',
+  NOTE: 'No credit card required.',
+};
+
 // HUB VIDEOS (NOT SIGNED IN)
 export const VIDEOS: { [key: string]: string } = {
   FEATURED: '2313nmcfbchw60si',
