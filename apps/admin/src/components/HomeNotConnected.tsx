@@ -22,7 +22,7 @@ export const HomeNotConnected = () => {
     <LivepeerConfig client={client}>
       <Flex
         align="center"
-        justify={{ base: 'center', md: 'space-around', xl: 'space-between' }}
+        justify={{ base: 'center', sm: 'center', md: 'space-between', xl: 'space-between' }}
         direction={{ base: 'column-reverse', md: 'row' }}
         wrap={'wrap'}
         minH="70vh"
@@ -34,13 +34,14 @@ export const HomeNotConnected = () => {
           w={{ base: '80%', md: '50%' }}
           align={['center', 'center', 'flex-start', 'flex-start']}
           mr={50}
+          mb={10}
         >
           <H1 color="primary.800">{'CREATIVE ProjeX'}</H1>
           <ParMd color="primary.800">
             {'Empower Your Creative Vision: Unleash the DAOvolution!'}
           </ParMd>
           <Button href="/" size="lg">
-            {'CREATE'}
+            {'Summon'}
           </Button>
           <Text
             fontSize="xs"
@@ -73,15 +74,9 @@ export const HomeNotConnected = () => {
               colors: {
                 accent: '#EC407A',
               },
-              space: {
-                controlsBottomMarginX: '10px',
-                controlsBottomMarginY: '5px',
-                controlsTopMarginX: '15px',
-                controlsTopMarginY: '10px',
-              },
               radii: { containerBorderRadius: '10px' },
             }}
-          ></Player>
+          />
         </Box>
       </Flex>
     </LivepeerConfig>
