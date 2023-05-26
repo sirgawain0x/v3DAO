@@ -6,23 +6,28 @@ import {
 } from '@livepeer/react';
 import { H1, ParMd, Button } from '@daohaus/ui';
 import { NEXT_PUBLIC_STUDIO_API_KEY } from '../utils/hub';
-import { Box, Flex, Stack, Text } from '@chakra-ui/react';
-import { VIDEOS } from '../utils/constants';
+import { Box, Flex, Stack, Text, Image } from '@chakra-ui/react';
+import { VIDEOS, VIDEO_IMAGE } from '../utils/constants';
 
 const client = createReactClient({
   provider: studioProvider({ apiKey: NEXT_PUBLIC_STUDIO_API_KEY }),
 });
 
-// const PosterImage = () => {
-//   return <Image src={''} height={'100%'} objectFit="cover" alt="Creative Warrior" placeholder="blur" />
-// }
+const PosterImage = () => {
+  return <Image src={VIDEO_IMAGE} height={'100%'} objectFit="cover" alt="Creative Logo" placeholder="blur" />
+}
 
 export const HomeNotConnected = () => {
   return (
     <LivepeerConfig client={client}>
       <Flex
         align="center"
-        justify={{ base: 'center', sm: 'center', md: 'space-between', xl: 'space-between' }}
+        justify={{
+          base: 'center',
+          sm: 'center',
+          md: 'space-between',
+          xl: 'space-between',
+        }}
         direction={{ base: 'column-reverse', md: 'row' }}
         wrap={'wrap'}
         minH="70vh"
@@ -61,6 +66,7 @@ export const HomeNotConnected = () => {
           <Player
             title="Metro Boomin"
             playbackId={VIDEOS.FEATURED}
+            poster={<PosterImage />}
             showPipButton
             autoPlay
             loop
