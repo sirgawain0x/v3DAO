@@ -71,6 +71,6 @@ export const DAO_METHOD_TO_PROPOSAL_TYPE: { [key: string]: string } = {
 };
 
 // HUB (NOT SIGNED IN)
-export const  VIDEOS: { [key: string]:string } = {
-  FEATURED: '2313nmcfbchw60si'
-}
+export const VIDEOS: { [key: string]: string } = {
+  FEATURED: '2313nmcfbchw60si',
+};
